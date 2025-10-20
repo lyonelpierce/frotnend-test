@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { AlertCircle } from 'lucide-react'
 import { dealsApi } from '../lib/api'
 import { StageColumn } from './StageColumn'
 import { SearchAndFilters } from './SearchAndFilters'
+import { Skeleton } from './ui/skeleton'
+import { Alert, AlertDescription } from './ui/alert'
 import type { Deal, DealStage } from '../lib/api'
 
 // Map the backend stages to the requested stages
@@ -33,6 +36,8 @@ export function DealDashboard() {
 
   // Drag and drop state
   const [draggedDeal, setDraggedDeal] = useState<Deal | null>(null)
+  const [dragOverStage, setDragOverStage] = useState<string | null>(null)
+  const [updatingDeals, setUpdatingDeals] = useState<Set<string>>(new Set())
 
   // Debounce search term
   useEffect(() => {
@@ -86,6 +91,9 @@ export function DealDashboard() {
       updates: { stage: DealStage }
     }) => dealsApi.updateDeal(dealId, updates),
     onMutate: async ({ dealId, updates }) => {
+      // Add to updating deals set for visual feedback
+      setUpdatingDeals((prev) => new Set(prev).add(dealId))
+
       // Cancel any outgoing refetches
       await queryClient.cancelQueries({ queryKey: ['deals'] })
 
@@ -122,7 +130,14 @@ export function DealDashboard() {
       // Show error message (you could add a toast notification here)
       console.error('Failed to update deal:', err)
     },
-    onSettled: () => {
+    onSettled: (_, __, variables) => {
+      // Remove from updating deals set
+      setUpdatingDeals((prev) => {
+        const newSet = new Set(prev)
+        newSet.delete(variables.dealId)
+        return newSet
+      })
+
       // Always refetch after error or success to ensure server state
       queryClient.invalidateQueries({ queryKey: ['deals'] })
     },
@@ -148,11 +163,35 @@ export function DealDashboard() {
     setDraggedDeal(deal)
     e.dataTransfer.effectAllowed = 'move'
     e.dataTransfer.setData('text/plain', deal.id)
+
+    // Create a custom drag image for better visual feedback
+    const dragImage = e.currentTarget.cloneNode(true) as HTMLElement
+    dragImage.style.transform = 'rotate(5deg) scale(1.05)'
+    dragImage.style.opacity = '0.8'
+    dragImage.style.border = '2px solid #3b82f6'
+    dragImage.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)'
+    dragImage.style.borderRadius = '8px'
+    dragImage.style.pointerEvents = 'none'
+    dragImage.style.position = 'absolute'
+    dragImage.style.top = '-1000px'
+    dragImage.style.left = '-1000px'
+    dragImage.style.zIndex = '1000'
+
+    document.body.appendChild(dragImage)
+    e.dataTransfer.setDragImage(dragImage, 0, 0)
+
+    // Clean up the drag image after a short delay
+    setTimeout(() => {
+      if (document.body.contains(dragImage)) {
+        document.body.removeChild(dragImage)
+      }
+    }, 0)
   }, [])
 
   // Handle drag end
   const handleDealDragEnd = useCallback((e: React.DragEvent) => {
     setDraggedDeal(null)
+    setDragOverStage(null)
     e.dataTransfer.clearData()
   }, [])
 
@@ -160,6 +199,7 @@ export function DealDashboard() {
   const handleDealDrop = useCallback(
     (e: React.DragEvent, targetStage: string) => {
       e.preventDefault()
+      setDragOverStage(null)
 
       if (!draggedDeal) return
 
@@ -179,10 +219,34 @@ export function DealDashboard() {
     [draggedDeal, updateDealMutation],
   )
 
+  // Handle drag over
+  const handleDealDragOver = useCallback(
+    (e: React.DragEvent, targetStage: string) => {
+      e.preventDefault()
+      setDragOverStage(targetStage)
+    },
+    [],
+  )
+
+  // Handle drag leave
+  const handleDealDragLeave = useCallback((e: React.DragEvent) => {
+    // Only clear if we're leaving the drop zone entirely
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setDragOverStage(null)
+    }
+  }, [])
+
   if (error instanceof Error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <p className="text-red-800">Error loading deals: {error.message}</p>
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-screen-2xl mx-auto">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Error loading deals: {error.message}
+            </AlertDescription>
+          </Alert>
+        </div>
       </div>
     )
   }
@@ -210,22 +274,6 @@ export function DealDashboard() {
           )}
         </div>
 
-        {/* Summary Stats */}
-        {!isLoading && (
-          <div className="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {STAGES.map((stage) => (
-                <div key={stage} className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">
-                    {groupedDeals[stage].length}
-                  </div>
-                  <div className="text-sm text-gray-500">{stage}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Search and Filters */}
         <SearchAndFilters
           searchTerm={searchTerm}
@@ -244,8 +292,22 @@ export function DealDashboard() {
 
         {/* Stage Columns */}
         {isLoading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <div className="flex gap-6 overflow-x-auto pb-4">
+            {STAGES.map((stage) => (
+              <div key={stage} className="flex-1 min-w-0">
+                <div className="mb-4">
+                  <Skeleton className="h-6 w-24 mb-2" />
+                  <Skeleton className="h-4 w-16" />
+                </div>
+                <div className="min-h-[400px] p-2 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50">
+                  <div className="space-y-3">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <Skeleton key={i} className="h-32 w-full" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="flex gap-6 overflow-x-auto pb-4">
@@ -257,6 +319,11 @@ export function DealDashboard() {
                 onDealDragStart={handleDealDragStart}
                 onDealDragEnd={handleDealDragEnd}
                 onDealDrop={handleDealDrop}
+                onDealDragOver={handleDealDragOver}
+                onDealDragLeave={handleDealDragLeave}
+                isDragOver={dragOverStage === stage}
+                draggedDeal={draggedDeal}
+                updatingDeals={updatingDeals}
               />
             ))}
           </div>

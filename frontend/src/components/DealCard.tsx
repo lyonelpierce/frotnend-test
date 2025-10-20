@@ -1,4 +1,11 @@
-import { Calendar, DollarSign, FileText, TrendingUp, User } from 'lucide-react'
+import {
+  Calendar,
+  DollarSign,
+  FileText,
+  Loader2,
+  TrendingUp,
+  User,
+} from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import type { Deal } from '../lib/api'
 
@@ -7,6 +14,7 @@ interface DealCardProps {
   onDragStart?: (e: React.DragEvent, deal: Deal) => void
   onDragEnd?: (e: React.DragEvent) => void
   isDragging?: boolean
+  isUpdating?: boolean
 }
 
 export function DealCard({
@@ -14,6 +22,7 @@ export function DealCard({
   onDragStart,
   onDragEnd,
   isDragging,
+  isUpdating,
 }: DealCardProps) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -53,13 +62,21 @@ export function DealCard({
       params={{ id: deal.id }}
       className={`
         block bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer
-        hover:shadow-md transition-shadow duration-200
+        hover:shadow-md transition-all duration-200 relative
         ${isDragging ? 'opacity-50 rotate-2 scale-105' : ''}
+        ${isUpdating ? 'opacity-75' : ''}
       `}
-      draggable
+      draggable={!isUpdating}
       onDragStart={(e) => onDragStart?.(e, deal)}
       onDragEnd={onDragEnd}
     >
+      {/* Loading overlay */}
+      {isUpdating && (
+        <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg z-10">
+          <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+        </div>
+      )}
+
       {/* Header with borrower name and risk score */}
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center gap-2">

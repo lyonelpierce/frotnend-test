@@ -3,3 +3,4 @@
 - Created dynamic pages using $.id and Route.useParams();
 - Created api file on libs to fetch and update data
 - use debounce for querying on search filter
+- added visual feedback and optimistic updates to dnd
