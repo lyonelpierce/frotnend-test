@@ -39,20 +39,27 @@ function RouteComponent() {
     queryFn: () => dealsApi.getDeal(id),
   })
 
+  // Extract borrowerId from deal data to enable parallel queries
+  const { data: borrowerId } = useQuery({
+    queryKey: ['deal', id],
+    queryFn: () => dealsApi.getDeal(id),
+    select: (dealData) => dealData.borrowerId,
+  })
+
   const { data: borrower, isLoading: borrowerLoading } = useQuery({
-    queryKey: ['borrower', deal?.borrowerId],
-    queryFn: () => dealsApi.getBorrower(deal!.borrowerId),
-    enabled: !!deal?.borrowerId,
+    queryKey: ['borrower', borrowerId],
+    queryFn: () => dealsApi.getBorrower(borrowerId!),
+    enabled: !!borrowerId,
   })
 
   const { data: financials, isLoading: financialsLoading } = useQuery({
-    queryKey: ['financials', deal?.borrowerId],
+    queryKey: ['financials', borrowerId],
     queryFn: () =>
-      dealsApi.getBorrowerFinancials(deal!.borrowerId, {
+      dealsApi.getBorrowerFinancials(borrowerId!, {
         fromYear: 2022,
         toYear: 2024,
       }),
-    enabled: !!deal?.borrowerId,
+    enabled: !!borrowerId,
   })
 
   const { data: documents, isLoading: documentsLoading } = useQuery({
