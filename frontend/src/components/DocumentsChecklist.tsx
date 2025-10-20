@@ -72,13 +72,15 @@ export function DocumentsChecklist({
             {documents.items.map((doc) => (
               <div
                 key={doc.id}
-                className="flex items-center justify-between p-4 border rounded-lg"
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg gap-4 sm:gap-0"
               >
-                <div className="flex items-center space-x-4">
-                  <FileText className="h-5 w-5 text-gray-400" />
-                  <div>
-                    <p className="font-medium">{doc.label}</p>
-                    <p className="text-sm text-gray-500">{doc.type}</p>
+                <div className="flex items-center space-x-4 min-w-0 flex-1">
+                  <FileText className="h-5 w-5 text-gray-400 shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium wrap-break-word">{doc.label}</p>
+                    <p className="text-sm text-gray-500 wrap-break-word">
+                      {doc.type}
+                    </p>
                     {doc.requiredBy && (
                       <p className="text-xs text-gray-400">
                         Due: {new Date(doc.requiredBy).toLocaleDateString()}
@@ -86,7 +88,7 @@ export function DocumentsChecklist({
                     )}
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 shrink-0">
                   <Badge
                     variant={
                       doc.status === 'received' || doc.status === 'verified'

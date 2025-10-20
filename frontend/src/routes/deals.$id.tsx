@@ -171,10 +171,10 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
         </div>
 
         {/* Main Content Skeleton */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Tabs Skeleton */}
-            <div className="grid w-full grid-cols-4 gap-2">
+            <div className="grid w-full grid-cols-2 sm:grid-cols-4 gap-2">
               <Skeleton className="h-10 w-full" />
               <Skeleton className="h-10 w-full" />
               <Skeleton className="h-10 w-full" />
@@ -182,13 +182,13 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
             </div>
 
             {/* Content Skeleton */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
                   <Skeleton className="h-6 w-32" />
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Skeleton className="h-4 w-20 mb-2" />
                       <Skeleton className="h-4 w-32" />
@@ -220,7 +220,7 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
                         <Skeleton className="h-4 w-24" />
                         <Skeleton className="h-4 w-16" />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Skeleton className="h-4 w-16 mb-1" />
                           <Skeleton className="h-5 w-24" />
@@ -250,13 +250,13 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between h-auto sm:h-16 py-4 sm:py-0 gap-4 sm:gap-0">
             <div className="flex items-center space-x-4">
               <Link to="/" className="text-gray-500 hover:text-gray-700">
                 <ArrowLeft className="h-5 w-5" />
               </Link>
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">
+                <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
                   {deal.name}
                 </h1>
                 <p className="text-sm text-gray-500">Deal ID: {deal.id}</p>
@@ -281,18 +281,26 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="checklist">Checklist</TabsTrigger>
-            <TabsTrigger value="activity">Activity</TabsTrigger>
-            <TabsTrigger value="term-sheet">Term-Sheet Playground</TabsTrigger>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+            <TabsTrigger value="overview" className="text-xs sm:text-sm">
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="checklist" className="text-xs sm:text-sm">
+              Checklist
+            </TabsTrigger>
+            <TabsTrigger value="activity" className="text-xs sm:text-sm">
+              Activity
+            </TabsTrigger>
+            <TabsTrigger value="term-sheet" className="text-xs sm:text-sm">
+              Term-Sheet
+            </TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               {/* Borrower Facts */}
               <BorrowerFacts borrower={borrower} isLoading={borrowerLoading} />
 
@@ -319,7 +327,7 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
           </TabsContent>
 
           {/* Checklist Tab */}
-          <TabsContent value="checklist" className="space-y-6">
+          <TabsContent value="checklist" className="space-y-4 sm:space-y-6">
             <DocumentsChecklist
               documents={documents}
               isLoading={documentsLoading}
@@ -329,7 +337,7 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
           </TabsContent>
 
           {/* Activity Tab */}
-          <TabsContent value="activity" className="space-y-6">
+          <TabsContent value="activity" className="space-y-4 sm:space-y-6">
             <ActivityTimeline
               activity={activity}
               isLoading={activityLoading}
@@ -338,7 +346,7 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
           </TabsContent>
 
           {/* Term-Sheet Playground Tab */}
-          <TabsContent value="term-sheet" className="space-y-6">
+          <TabsContent value="term-sheet" className="space-y-4 sm:space-y-6">
             <TermSheetPlayground
               termSheet={termSheet}
               termSheetLoading={termSheetLoading}

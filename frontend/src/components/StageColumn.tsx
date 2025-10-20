@@ -30,11 +30,11 @@ export function StageColumn({
   updatingDeals = new Set(),
 }: StageColumnProps) {
   return (
-    <div className="flex-1 min-w-0">
+    <div className="flex-1 min-w-[280px] sm:min-w-0">
       <Card className="h-full">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg">{title}</CardTitle>
+            <CardTitle className="text-base sm:text-lg">{title}</CardTitle>
             <div className="flex items-center gap-2">
               {updatingDeals.size > 0 && (
                 <Loader2 className="h-4 w-4 animate-spin text-blue-500" />

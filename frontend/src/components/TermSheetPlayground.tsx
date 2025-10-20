@@ -58,8 +58,8 @@ export function TermSheetPlayground({
   summaryText,
 }: TermSheetPlaygroundProps) {
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Interactive Inputs */}
         <Card>
           <CardHeader>
@@ -72,7 +72,7 @@ export function TermSheetPlayground({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-gray-700">
                   Amount ($)
@@ -131,12 +131,22 @@ export function TermSheetPlayground({
                 />
               </div>
             </div>
-            <div className="flex space-x-2">
-              <Button onClick={onResetToDealAmount} variant="outline" size="sm">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button
+                onClick={onResetToDealAmount}
+                variant="outline"
+                size="sm"
+                className="w-full sm:w-auto"
+              >
                 <RefreshCw className="h-4 w-4 mr-1" />
                 Reset to Deal Amount
               </Button>
-              <Button onClick={onCopySummary} variant="outline" size="sm">
+              <Button
+                onClick={onCopySummary}
+                variant="outline"
+                size="sm"
+                className="w-full sm:w-auto"
+              >
                 <Copy className="h-4 w-4 mr-1" />
                 Copy Summary
               </Button>
@@ -152,7 +162,7 @@ export function TermSheetPlayground({
           <CardContent>
             {termSheetLoading ? (
               <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <Skeleton className="h-4 w-20 mb-1" />
                     <Skeleton className="h-4 w-16" />
@@ -181,7 +191,7 @@ export function TermSheetPlayground({
               </div>
             ) : termSheet ? (
               <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-500">Base Rate:</span>
                     <span className="ml-2 font-medium">

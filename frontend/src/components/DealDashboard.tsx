@@ -254,15 +254,15 @@ export function DealDashboard() {
   const groupedDeals = dealsByStage
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-3 sm:p-6">
       <div className="max-w-screen-2xl mx-auto flex flex-col gap-4">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               Deal Dashboard
             </h1>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               Manage and track deals through the pipeline
             </p>
           </div>
@@ -292,9 +292,9 @@ export function DealDashboard() {
 
         {/* Stage Columns */}
         {isLoading ? (
-          <div className="flex gap-6 overflow-x-auto pb-4">
+          <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-4">
             {STAGES.map((stage) => (
-              <div key={stage} className="flex-1 min-w-0">
+              <div key={stage} className="flex-1 min-w-[280px] sm:min-w-0">
                 <div className="mb-4">
                   <Skeleton className="h-6 w-24 mb-2" />
                   <Skeleton className="h-4 w-16" />
@@ -310,7 +310,7 @@ export function DealDashboard() {
             ))}
           </div>
         ) : (
-          <div className="flex gap-6 overflow-x-auto pb-4">
+          <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-4">
             {STAGES.map((stage) => (
               <StageColumn
                 key={stage}

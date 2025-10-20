@@ -79,15 +79,13 @@ export function DealCard({
 
       {/* Header with borrower name and risk score */}
       <div className="flex justify-between items-start mb-3">
-        <div className="flex items-center gap-2">
-          <User className="w-4 h-4 text-gray-500" />
-          <h3 className="font-semibold text-gray-900 truncate max-w-[180px]">
-            {deal.name}
-          </h3>
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <User className="w-4 h-4 text-gray-500 shrink-0" />
+          <h3 className="font-semibold text-gray-900 truncate">{deal.name}</h3>
         </div>
         {deal.riskScore && (
           <div
-            className={`flex items-center gap-1 text-sm font-medium ${getRiskScoreColor(deal.riskScore)}`}
+            className={`flex items-center gap-1 text-sm font-medium shrink-0 ml-2 ${getRiskScoreColor(deal.riskScore)}`}
           >
             <TrendingUp className="w-3 h-3" />
             {Math.round(deal.riskScore * 100)}
@@ -96,12 +94,14 @@ export function DealCard({
       </div>
 
       {/* Amount and Product */}
-      <div className="flex items-center gap-2 mb-3">
-        <DollarSign className="w-4 h-4 text-gray-500" />
-        <span className="font-semibold text-gray-900">
-          {formatCurrency(deal.requestedAmount)}
-        </span>
-        <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
+        <div className="flex items-center gap-2">
+          <DollarSign className="w-4 h-4 text-gray-500 shrink-0" />
+          <span className="font-semibold text-gray-900">
+            {formatCurrency(deal.requestedAmount)}
+          </span>
+        </div>
+        <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded self-start sm:self-auto">
           {deal.product}
         </span>
       </div>

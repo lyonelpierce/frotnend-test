@@ -27,7 +27,7 @@ export function BorrowerFacts({ borrower, isLoading }: BorrowerFactsProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Skeleton className="h-4 w-20 mb-2" />
               <Skeleton className="h-4 w-32" />
@@ -47,18 +47,22 @@ export function BorrowerFacts({ borrower, isLoading }: BorrowerFactsProps) {
           </div>
         ) : borrower ? (
           <>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium text-gray-500">Legal Name</p>
-                <p className="text-sm">{borrower.legalName}</p>
+                <p className="text-sm wrap-break-word">{borrower.legalName}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">Industry</p>
-                <p className="text-sm">{borrower.industry || 'N/A'}</p>
+                <p className="text-sm wrap-break-word">
+                  {borrower.industry || 'N/A'}
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">NAICS</p>
-                <p className="text-sm">{borrower.naics || 'N/A'}</p>
+                <p className="text-sm wrap-break-word">
+                  {borrower.naics || 'N/A'}
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -72,7 +76,7 @@ export function BorrowerFacts({ borrower, isLoading }: BorrowerFactsProps) {
             {borrower.address && (
               <div>
                 <p className="text-sm font-medium text-gray-500">Address</p>
-                <p className="text-sm">{borrower.address}</p>
+                <p className="text-sm wrap-break-word">{borrower.address}</p>
               </div>
             )}
           </>
