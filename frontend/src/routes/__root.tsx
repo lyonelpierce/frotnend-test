@@ -7,6 +7,8 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import { ThemeProvider } from '../contexts/ThemeContext'
+import { Header } from '../components/Header'
 
 import appCss from '../styles.css?url'
 
@@ -48,7 +50,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <ThemeProvider>
+          <Header />
+          <main className="min-h-screen bg-background">{children}</main>
+        </ThemeProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

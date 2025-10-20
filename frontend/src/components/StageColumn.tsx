@@ -37,7 +37,7 @@ export function StageColumn({
             <CardTitle className="text-base sm:text-lg">{title}</CardTitle>
             <div className="flex items-center gap-2">
               {updatingDeals.size > 0 && (
-                <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+                <Loader2 className="h-4 w-4 animate-spin text-primary" />
               )}
               <Badge variant="secondary">{deals.length}</Badge>
             </div>
@@ -50,7 +50,7 @@ export function StageColumn({
               min-h-[400px] p-2 rounded-lg border-2 border-dashed transition-all duration-300 ease-in-out
               ${
                 isDragOver
-                  ? 'border-blue-500 bg-blue-50 scale-[1.02] shadow-lg'
+                  ? 'border-primary bg-primary/10 scale-[1.02] shadow-lg'
                   : 'border-dashed border-muted-foreground/25 bg-muted/5'
               }
             `}

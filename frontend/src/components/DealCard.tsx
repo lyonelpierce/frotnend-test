@@ -50,7 +50,7 @@ export function DealCard({
   }
 
   const getDocsProgressColor = (progress: number | null) => {
-    if (!progress) return 'bg-gray-200'
+    if (!progress) return 'bg-muted'
     if (progress >= 80) return 'bg-green-500'
     if (progress >= 50) return 'bg-yellow-500'
     return 'bg-red-500'
@@ -61,8 +61,8 @@ export function DealCard({
       to="/deals/$id"
       params={{ id: deal.id }}
       className={`
-        block bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer
-        hover:shadow-md transition-all duration-200 relative
+        block bg-card rounded-lg shadow-sm border border-border p-4 cursor-pointer
+        hover:shadow-md transition-all duration-200 relative text-card-foreground
         ${isDragging ? 'opacity-50 rotate-2 scale-105' : ''}
         ${isUpdating ? 'opacity-75' : ''}
       `}
@@ -72,16 +72,18 @@ export function DealCard({
     >
       {/* Loading overlay */}
       {isUpdating && (
-        <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg z-10">
-          <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+        <div className="absolute inset-0 bg-card/80 flex items-center justify-center rounded-lg z-10">
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
         </div>
       )}
 
       {/* Header with borrower name and risk score */}
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          <User className="w-4 h-4 text-gray-500 shrink-0" />
-          <h3 className="font-semibold text-gray-900 truncate">{deal.name}</h3>
+          <User className="w-4 h-4 text-muted-foreground shrink-0" />
+          <h3 className="font-semibold text-card-foreground truncate">
+            {deal.name}
+          </h3>
         </div>
         {deal.riskScore && (
           <div
@@ -96,12 +98,12 @@ export function DealCard({
       {/* Amount and Product */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <DollarSign className="w-4 h-4 text-gray-500 shrink-0" />
-          <span className="font-semibold text-gray-900">
+          <DollarSign className="w-4 h-4 text-muted-foreground shrink-0" />
+          <span className="font-semibold text-card-foreground">
             {formatCurrency(deal.requestedAmount)}
           </span>
         </div>
-        <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded self-start sm:self-auto">
+        <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded self-start sm:self-auto">
           {deal.product}
         </span>
       </div>
@@ -110,13 +112,13 @@ export function DealCard({
       {deal.docsProgress !== null && (
         <div className="mb-3">
           <div className="flex items-center gap-2 mb-1">
-            <FileText className="w-4 h-4 text-gray-500" />
-            <span className="text-sm text-gray-600">Docs Progress</span>
-            <span className="text-sm font-medium text-gray-900">
+            <FileText className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">Docs Progress</span>
+            <span className="text-sm font-medium text-card-foreground">
               {Math.round(deal.docsProgress * 100)}%
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-muted rounded-full h-2">
             <div
               className={`h-2 rounded-full transition-all duration-300 ${getDocsProgressColor(deal.docsProgress)}`}
               style={{ width: `${deal.docsProgress * 100}%` }}
@@ -127,14 +129,14 @@ export function DealCard({
 
       {/* Owner */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-sm text-gray-500">Owner:</span>
-        <span className="text-sm font-medium text-gray-900">
+        <span className="text-sm text-muted-foreground">Owner:</span>
+        <span className="text-sm font-medium text-card-foreground">
           {deal.owner.name}
         </span>
       </div>
 
       {/* Last Updated */}
-      <div className="flex items-center gap-2 text-xs text-gray-500">
+      <div className="flex items-center gap-2 text-xs text-muted-foreground">
         <Calendar className="w-3 h-3" />
         <span>Updated {formatDate(deal.updatedAt)}</span>
       </div>
@@ -145,13 +147,13 @@ export function DealCard({
           {deal.flags.slice(0, 3).map((flag, index) => (
             <span
               key={index}
-              className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded"
+              className="text-xs bg-destructive/10 text-destructive px-2 py-1 rounded"
             >
               {flag}
             </span>
           ))}
           {deal.flags.length > 3 && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-muted-foreground">
               +{deal.flags.length - 3} more
             </span>
           )}
