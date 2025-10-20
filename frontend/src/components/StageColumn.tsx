@@ -37,9 +37,17 @@ export function StageColumn({
             <CardTitle className="text-base sm:text-lg">{title}</CardTitle>
             <div className="flex items-center gap-2">
               {updatingDeals.size > 0 && (
-                <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                <Loader2
+                  className="h-4 w-4 animate-spin text-primary"
+                  aria-hidden="true"
+                />
               )}
-              <Badge variant="secondary">{deals.length}</Badge>
+              <Badge
+                variant="secondary"
+                aria-label={`${deals.length} deals in ${title}`}
+              >
+                {deals.length}
+              </Badge>
             </div>
           </div>
         </CardHeader>
@@ -57,9 +65,16 @@ export function StageColumn({
             onDragOver={(e) => onDealDragOver(e, title)}
             onDragLeave={onDealDragLeave}
             onDrop={(e) => onDealDrop(e, title)}
+            role="region"
+            aria-label={`${title} stage drop zone`}
+            aria-live="polite"
           >
             {/* Deal Cards */}
-            <div className="space-y-3">
+            <div
+              className="space-y-3"
+              role="list"
+              aria-label={`Deals in ${title} stage`}
+            >
               {deals.map((deal) => (
                 <DealCard
                   key={deal.id}
@@ -74,8 +89,10 @@ export function StageColumn({
               {deals.length === 0 && (
                 <div className="flex items-center justify-center h-32 text-muted-foreground">
                   <div className="text-center">
-                    <div className="text-4xl mb-2">📋</div>
-                    <p className="text-sm">
+                    <div className="text-4xl mb-2" aria-hidden="true">
+                      📋
+                    </div>
+                    <p className="text-sm" aria-live="polite">
                       {isDragOver ? 'Drop here!' : 'Drop deals here'}
                     </p>
                   </div>

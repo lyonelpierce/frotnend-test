@@ -238,7 +238,7 @@ export function DealDashboard() {
 
   if (error instanceof Error) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6">
+      <div className="min-h-screen bg-background p-6">
         <div className="max-w-screen-2xl mx-auto">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -254,8 +254,8 @@ export function DealDashboard() {
   const groupedDeals = dealsByStage
 
   return (
-    <div className="min-h-screen bg-background p-3 sm:p-6">
-      <div className="max-w-screen-2xl mx-auto flex flex-col gap-4">
+    <div className="min-h-screen bg-background p-4 sm:p-6">
+      <div className="max-w-screen-2xl mx-auto flex flex-col gap-4 px-4">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -299,7 +299,7 @@ export function DealDashboard() {
                   <Skeleton className="h-6 w-24 mb-2" />
                   <Skeleton className="h-4 w-16" />
                 </div>
-                <div className="min-h-[400px] p-2 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50">
+                <div className="min-h-[400px] p-2 rounded-lg border-2 border-dashed border-border bg-muted/5">
                   <div className="space-y-3">
                     {Array.from({ length: 3 }).map((_, i) => (
                       <Skeleton key={i} className="h-32 w-full" />

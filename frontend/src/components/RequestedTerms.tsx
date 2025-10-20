@@ -57,7 +57,7 @@ export function RequestedTerms({
         ) : termSheet ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-              <p className="text-sm font-medium text-gray-500">
+              <p className="text-sm font-medium text-muted-foreground">
                 Requested Amount
               </p>
               <p className="text-lg font-semibold">
@@ -65,17 +65,21 @@ export function RequestedTerms({
               </p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-500">Base Rate</p>
+              <p className="text-sm font-medium text-muted-foreground">
+                Base Rate
+              </p>
               <p className="text-lg font-semibold">{termSheet.baseRate}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-500">Amortization</p>
+              <p className="text-sm font-medium text-muted-foreground">
+                Amortization
+              </p>
               <p className="text-lg font-semibold">
                 {termSheet.amortMonths} months
               </p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-500">
+              <p className="text-sm font-medium text-muted-foreground">
                 Origination Fee
               </p>
               <p className="text-lg font-semibold">
@@ -86,7 +90,7 @@ export function RequestedTerms({
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-              <p className="text-sm font-medium text-gray-500">
+              <p className="text-sm font-medium text-muted-foreground">
                 Requested Amount
               </p>
               <p className="text-lg font-semibold">
@@ -94,19 +98,21 @@ export function RequestedTerms({
               </p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-500">Probability</p>
+              <p className="text-sm font-medium text-muted-foreground">
+                Probability
+              </p>
               <p className="text-lg font-semibold">
                 {(deal.probability * 100).toFixed(0)}%
               </p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-500">DSCR</p>
+              <p className="text-sm font-medium text-muted-foreground">DSCR</p>
               <p className="text-lg font-semibold">
                 {deal.dscr ? deal.dscr.toFixed(2) : 'N/A'}
               </p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-500">LTV</p>
+              <p className="text-sm font-medium text-muted-foreground">LTV</p>
               <p className="text-lg font-semibold">
                 {deal.ltv ? (deal.ltv * 100).toFixed(1) + '%' : 'N/A'}
               </p>

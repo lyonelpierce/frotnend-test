@@ -75,14 +75,14 @@ export function DocumentsChecklist({
                 className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg gap-4 sm:gap-0"
               >
                 <div className="flex items-center space-x-4 min-w-0 flex-1">
-                  <FileText className="h-5 w-5 text-gray-400 shrink-0" />
+                  <FileText className="h-5 w-5 text-muted-foreground shrink-0" />
                   <div className="min-w-0 flex-1">
                     <p className="font-medium wrap-break-word">{doc.label}</p>
-                    <p className="text-sm text-gray-500 wrap-break-word">
+                    <p className="text-sm text-muted-foreground wrap-break-word">
                       {doc.type}
                     </p>
                     {doc.requiredBy && (
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-muted-foreground">
                         Due: {new Date(doc.requiredBy).toLocaleDateString()}
                       </p>
                     )}
@@ -114,13 +114,18 @@ export function DocumentsChecklist({
                         })
                       }
                       disabled={isRequesting}
+                      aria-label={`Request ${doc.label} document`}
                     >
                       {isRequesting ? 'Requesting...' : 'Request'}
                     </Button>
                   )}
                   {doc.link && (
-                    <Button size="sm" variant="outline">
-                      <Download className="h-4 w-4 mr-1" />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      aria-label={`Download ${doc.label} document`}
+                    >
+                      <Download className="h-4 w-4 mr-1" aria-hidden="true" />
                       Download
                     </Button>
                   )}
@@ -129,7 +134,7 @@ export function DocumentsChecklist({
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-muted-foreground">
             No documents required for this deal
           </div>
         )}

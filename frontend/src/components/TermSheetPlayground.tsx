@@ -74,10 +74,14 @@ export function TermSheetPlayground({
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="amount-input"
+                  className="text-sm font-medium text-foreground"
+                >
                   Amount ($)
                 </label>
                 <Input
+                  id="amount-input"
                   type="number"
                   placeholder="Enter amount"
                   value={termSheetInputs.amount || ''}
@@ -85,13 +89,23 @@ export function TermSheetPlayground({
                     onTermSheetInputChange('amount', e.target.value)
                   }
                   className="mt-1"
+                  aria-describedby="amount-help"
+                  min="0"
+                  step="1"
                 />
+                <div id="amount-help" className="sr-only">
+                  Enter the loan amount in dollars
+                </div>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="rate-input"
+                  className="text-sm font-medium text-foreground"
+                >
                   Rate (%)
                 </label>
                 <Input
+                  id="rate-input"
                   type="number"
                   step="0.01"
                   placeholder="Enter rate"
@@ -100,13 +114,23 @@ export function TermSheetPlayground({
                     onTermSheetInputChange('rate', e.target.value)
                   }
                   className="mt-1"
+                  aria-describedby="rate-help"
+                  min="0"
+                  max="100"
                 />
+                <div id="rate-help" className="sr-only">
+                  Enter the interest rate as a percentage
+                </div>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="amortization-input"
+                  className="text-sm font-medium text-foreground"
+                >
                   Amortization (months)
                 </label>
                 <Input
+                  id="amortization-input"
                   type="number"
                   placeholder="Enter amortization"
                   value={termSheetInputs.amort || ''}
@@ -114,13 +138,22 @@ export function TermSheetPlayground({
                     onTermSheetInputChange('amort', e.target.value)
                   }
                   className="mt-1"
+                  aria-describedby="amortization-help"
+                  min="1"
                 />
+                <div id="amortization-help" className="sr-only">
+                  Enter the amortization period in months
+                </div>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="term-input"
+                  className="text-sm font-medium text-foreground"
+                >
                   Term (months)
                 </label>
                 <Input
+                  id="term-input"
                   type="number"
                   placeholder="Enter term"
                   value={termSheetInputs.term || ''}
@@ -128,7 +161,12 @@ export function TermSheetPlayground({
                     onTermSheetInputChange('term', e.target.value)
                   }
                   className="mt-1"
+                  aria-describedby="term-help"
+                  min="1"
                 />
+                <div id="term-help" className="sr-only">
+                  Enter the loan term in months
+                </div>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
@@ -193,38 +231,44 @@ export function TermSheetPlayground({
               <div className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-500">Base Rate:</span>
+                    <span className="text-muted-foreground">Base Rate:</span>
                     <span className="ml-2 font-medium">
                       {termSheet.baseRate}
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500">Margin:</span>
+                    <span className="text-muted-foreground">Margin:</span>
                     <span className="ml-2 font-medium">
                       {termSheet.marginBps} bps
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500">Amortization:</span>
+                    <span className="text-muted-foreground">Amortization:</span>
                     <span className="ml-2 font-medium">
                       {termSheet.amortMonths} months
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500">Interest Only:</span>
+                    <span className="text-muted-foreground">
+                      Interest Only:
+                    </span>
                     <span className="ml-2 font-medium">
                       {termSheet.interestOnlyMonths} months
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500">Origination Fee:</span>
+                    <span className="text-muted-foreground">
+                      Origination Fee:
+                    </span>
                     <span className="ml-2 font-medium">
                       {termSheet.originationFeeBps} bps
                     </span>
                   </div>
                   {termSheet.prepayPenalty && (
                     <div>
-                      <span className="text-gray-500">Prepay Penalty:</span>
+                      <span className="text-muted-foreground">
+                        Prepay Penalty:
+                      </span>
                       <span className="ml-2 font-medium">
                         {termSheet.prepayPenalty}
                       </span>
@@ -233,7 +277,7 @@ export function TermSheetPlayground({
                 </div>
                 {termSheet.collateral && (
                   <div className="text-sm">
-                    <span className="text-gray-500">Collateral:</span>
+                    <span className="text-muted-foreground">Collateral:</span>
                     <span className="ml-2 font-medium">
                       {termSheet.collateral}
                     </span>
@@ -241,7 +285,9 @@ export function TermSheetPlayground({
                 )}
               </div>
             ) : (
-              <div className="text-gray-500">No term sheet available</div>
+              <div className="text-muted-foreground">
+                No term sheet available
+              </div>
             )}
           </CardContent>
         </Card>
@@ -289,10 +335,12 @@ export function TermSheetPlayground({
                       {suggestion.severity}
                     </Badge>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-900">{suggestion.text}</p>
+                      <p className="text-sm text-foreground">
+                        {suggestion.text}
+                      </p>
                       {suggestion.inputs &&
                         Object.keys(suggestion.inputs).length > 0 && (
-                          <div className="mt-2 text-xs text-gray-500">
+                          <div className="mt-2 text-xs text-muted-foreground">
                             Based on:{' '}
                             {Object.entries(suggestion.inputs)
                               .map(([key, value]) => `${key}: ${value}`)
@@ -305,7 +353,7 @@ export function TermSheetPlayground({
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-muted-foreground">
               Enter some parameters above to see AI suggestions and trade-offs
             </div>
           )}

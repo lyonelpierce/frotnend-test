@@ -26,6 +26,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return 'light'
   })
 
+  // Initialize theme immediately on mount to prevent flash
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const root = document.documentElement
+      // Apply theme class immediately
+      if (theme === 'dark') {
+        root.classList.add('dark')
+      } else {
+        root.classList.remove('dark')
+      }
+    }
+  }, [])
+
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme)
     if (typeof window !== 'undefined') {

@@ -150,10 +150,10 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
 
   if (dealLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background">
         {/* Header Skeleton */}
-        <div className="bg-white border-b">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-card border-b">
+          <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
                 <Skeleton className="h-5 w-5" />
@@ -171,7 +171,7 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
         </div>
 
         {/* Main Content Skeleton */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="space-y-4 sm:space-y-6">
             {/* Tabs Skeleton */}
             <div className="grid w-full grid-cols-2 sm:grid-cols-4 gap-2">
@@ -249,7 +249,7 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-card border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-4 lg:px-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between h-auto sm:h-16 py-4 sm:py-0 gap-4 sm:gap-0">
             <div className="flex items-center space-x-4">
               <Link
@@ -286,7 +286,7 @@ ${inputs ? `Input Parameters: ${inputs}` : ''}`
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-4 py-4 sm:py-6">
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
             <TabsTrigger value="overview" className="text-xs sm:text-sm">

@@ -57,19 +57,19 @@ export function FinancialSummary({
                   <span className="text-sm font-medium">
                     {financial.period}
                   </span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-muted-foreground">
                     {financial.periodEnd}
                   </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-gray-500">Revenue</p>
+                    <p className="text-muted-foreground">Revenue</p>
                     <p className="font-medium">
                       ${financial.revenue.toLocaleString()}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500">EBITDA</p>
+                    <p className="text-muted-foreground">EBITDA</p>
                     <p className="font-medium">
                       ${financial.ebitda.toLocaleString()}
                     </p>

@@ -69,16 +69,16 @@ export function ActivityTimeline({
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-foreground">
                       {event.type}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                       {new Date(event.at).toLocaleString()}
                     </p>
                   </div>
                   {Object.keys(event.payload).length > 0 && (
-                    <div className="mt-1 text-sm text-gray-600">
-                      <pre className="whitespace-pre-wrap text-xs bg-gray-50 p-2 rounded">
+                    <div className="mt-1 text-sm text-foreground">
+                      <pre className="whitespace-pre-wrap text-xs bg-muted p-2 rounded">
                         {JSON.stringify(event.payload, null, 2)}
                       </pre>
                     </div>
@@ -88,7 +88,7 @@ export function ActivityTimeline({
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-muted-foreground">
             No activity recorded for this deal
           </div>
         )}
