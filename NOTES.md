@@ -1,0 +1,5 @@
+- Starter with tanstack query, start, and shadcnui components
+- Use react query to fetch data from backend
+- Created dynamic pages using $.id and Route.useParams();
+- Created api file on libs to fetch and update data
+- use debounce for querying on search filter
